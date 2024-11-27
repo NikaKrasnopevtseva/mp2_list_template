@@ -13,8 +13,22 @@ bool Node::operator==(const Node& node2) const
 {
 	return (data == node2.data);
 }
+bool Node::operator==(const Node& node2) const
+{
+	return (data != node2.data);
+}
 
 List::List() : head(nullptr) {}
+
+List& List::operator=(const List& list2)
+{
+	head = list2.head;
+}
+
+List::List(const List& list2)
+{
+	head = list2.head;
+}
 
 void List::InsertToHead(const DataType& d)
 {
@@ -27,7 +41,7 @@ void List::InsertToHead(const DataType& d)
 
 void List::InsertToTail(const DataType& d)
 {
-	Node* tmp; // ходилка
+	Node* tmp; // С…РѕРґРёР»РєР°
 	tmp = head;
 
 	if (isEmpty())
@@ -36,7 +50,7 @@ void List::InsertToTail(const DataType& d)
 	}
 	else
 	{
-		while (tmp->next != nullptr) // это признак хвоста
+		while (tmp->next != nullptr) // СЌС‚Рѕ РїСЂРёР·РЅР°Рє С…РІРѕСЃС‚Р°
 		{
 			tmp = tmp->next;
 		}
@@ -50,8 +64,8 @@ DataType List::ViewTail()
 		throw std::logic_error("list is empty");
 	else
 	{
-		Node* tmp = head; // ходилка
-		while (tmp->next != nullptr) // это признак хвоста
+		Node* tmp = head; // С…РѕРґРёР»РєР°
+		while (tmp->next != nullptr) // СЌС‚Рѕ РїСЂРёР·РЅР°Рє С…РІРѕСЃС‚Р°
 		{
 			tmp = tmp->next;
 		}
@@ -59,9 +73,17 @@ DataType List::ViewTail()
 	}
 }
 
+DataType List::ViewTail()
+{
+	if (isEmpty())
+		throw std::logic_error("list is empty");
+	else
+		return data;
+}
+
 void List::Delete(const DataType& d)
 {
-	Node* tmp = head; // ходилка
+	Node* tmp = head; // С…РѕРґРёР»РєР°
 	Node* prev = nullptr;
 
 	while ((tmp!= nullptr) && (tmp->data != d))
@@ -77,17 +99,22 @@ void List::Delete(const DataType& d)
 		}
 		else
 		{
-			// это голова
+			// СЌС‚Рѕ РіРѕР»РѕРІР°
 			head = head->next;
 		}
 		delete tmp;
 	}
 }
 
+listIterator List::begin()
+{
+	return listIterator(head);
+}
+
 listIterator List::tail()
 {
-	Node* tmp = head; // ходилка
-	while (tmp->next != nullptr) // это признак хвоста
+	Node* tmp = head; // С…РѕРґРёР»РєР°
+	while (tmp->next != nullptr) // СЌС‚Рѕ РїСЂРёР·РЅР°Рє С…РІРѕСЃС‚Р°
 	{
 		tmp = tmp->next;
 	}
@@ -96,7 +123,7 @@ listIterator List::tail()
 
 listIterator List::end()
 {
-	return listIterator();
+	return listIterator(nullptr); //РµСЃР»Рё С†РёРєР»РёС‡РЅС‹Р№ c С„РёРєС‚РёРІРЅРѕР№ РіРѕР»РѕРІРѕР№ С‚Рѕ return listIterator(head);
 }
 
 List::~List()
