@@ -12,10 +12,11 @@ struct Node
   DataType data;
   Node* next;
   
-  Node(DataType d = 0, Node* n = nullptr);
-  Node(const Node& node2);
-  bool operator==(const Node& node2) const;
-  bool operator!=(const Node& node2) const;
+  Node(DataType d = 0, Node* n = nullptr);	//+
+  Node(const Node& node2);					//+
+  bool operator==(const Node& node2) const;	//+
+  bool operator!=(const Node& node2) const;	//+
+  //перегрузить операторы сравнения по data
 };
 
 // example
@@ -25,23 +26,25 @@ template <typename DataType>
 class listIterator : public std::iterator<std::forward_iterator_tag, DataType>
 {
 public:
-	using iterator_category = std::forward_iterator_tag;
-	using difference_type   = std::ptrdiff_t;
-	using value_type = DataType;
-	using pointer = Node<DataType>*;
-	using reference = DataType&;
+	using iterator_category = std::forward_iterator_tag; // чтобы контейнер с итератором использовать извне
+	using difference_type   = std::ptrdiff_t; // можно не думать
+	using value_type = DataType; //
+	using pointer = Node<DataType>*; //
+	using reference = DataType&; //
 
 	listIterator(pointer* tmp) : p(tmp) {};
-	reference operator*();
-	pointer* operator->();
-	listIterator& operator++();
-	listIterator operator++(int);
-	bool operator==(const listIterator& it2) const;
+	reference operator*(); //
+	pointer operator->();
+	listIterator& operator++();// префиксный итератор
+	listIterator operator++(int); // постфиксный итератор
+	bool operator==(const listIterator& it2) const; //сравниваем указатели
 	bool operator!=(const listIterator& it2) const;
 
 private:
 	pointer p;
 };
+
+
 
 template <typename DataType>
 class List
@@ -53,26 +56,27 @@ public:
   List();
   bool isEmpty();
 
-  void InsertToHead(const DataType& d); // вставить элемент d первым
+  void InsertToHead(const DataType& d); // вставить элемент d первым   +
 
-  DataType ViewHead(); // посмотреть первого
+  DataType ViewHead(); // посмотреть первого	+
   
-  void InsertToTail(const DataType& d); // вставить элемент d последним
+  void InsertToTail(const DataType& d); // вставить элемент d последним   +
 
-  DataType ViewTail(); // посмотреть последнего
+  DataType ViewTail(); // посмотреть последнего		+
 										
-  void Delete(const DataType& d); // удалить звено со значением data = d											
-  listIterator<DataType> begin(); // получить итератор на первое звено 
+  void Delete(const DataType& d); // удалить звено со значением data = d   +
 
-  listIterator<DataType> tail(); // получить итератор на последнее звено
+  listIterator<DataType> begin(); // получить итератор на первое звено	+
 
-  listIterator<DataType> end(); // получить итератор на конец списка
+  listIterator<DataType> tail(); // получить итератор на последнее звено	+
 
-  ~List();
+  listIterator<DataType> end(); // получить итератор на конец списка	+
 
-  List(const List& list2);
+  ~List();	//+
+
+  List(const List& list2); //+
   
-  List& operator=(const List& list2);
+  List& operator=(const List& list2);	//+
   
   void Clean(); // удалить все звенья  
   			
