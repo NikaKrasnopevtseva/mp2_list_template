@@ -12,7 +12,7 @@ struct Node
   DataType data;
   Node* next;
   
-  Node(DataType d = 0, Node* n = nullptr);	//+
+  Node(DataType d = 0, Node* n = nullptr);//+
   Node(const Node& node2);					//+
   bool operator==(const Node& node2) const;	//+
   bool operator!=(const Node& node2) const;	//+
@@ -33,9 +33,9 @@ public:
 	using reference = DataType&; //
 
 	listIterator(pointer* tmp) : p(tmp) {};
-	reference operator*(); //
+	reference operator*() const; //
 	pointer operator->();
-	listIterator& operator++();// префиксный итератор
+	listIterator& operator++();  // префиксный итератор
 	listIterator operator++(int); // постфиксный итератор
 	bool operator==(const listIterator& it2) const; //сравниваем указатели
 	bool operator!=(const listIterator& it2) const;
@@ -50,7 +50,6 @@ template <typename DataType>
 class List
 {
   Node<DataType>* head;
-//  Node<DataType>* tail; // по желанию
 
 public:
   List();
