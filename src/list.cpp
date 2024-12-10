@@ -7,7 +7,9 @@ Node::Node(DataType d, Node* n) : data(d), next(n)
 Node::Node(const Node& node2)
 {
 	data = node2.data;
+	next = node2.next;
 }
+
 
 bool Node::operator==(const Node& node2) const
 {
@@ -19,6 +21,8 @@ bool Node::operator==(const Node& node2) const
 }
 
 List::List() : head(nullptr) {}
+
+bool List::isEmpty() { return head == nullptr; }    //если цикличный c фиктивной головой то переделать
 
 List& List::operator=(const List& list2)
 {
@@ -33,10 +37,14 @@ List::List(const List& list2)
 void List::InsertToHead(const DataType& d)
 {
 	Node* p = new Node(d, head);
-	// Node* p = new Node;
-	//p->data = d;
-	//p->next = head;
 	head = p;
+}
+
+DataType List::ViewHead()
+{
+	if (isEmpty())
+		throw ("list is empty");
+	return head->data;
 }
 
 void List::InsertToTail(const DataType& d)
@@ -61,7 +69,7 @@ void List::InsertToTail(const DataType& d)
 DataType List::ViewTail()
 {
 	if (isEmpty())
-		throw std::logic_error("list is empty");
+		throw ("list is empty");
 	else
 	{
 		Node* tmp = head; // ходилка
@@ -73,13 +81,6 @@ DataType List::ViewTail()
 	}
 }
 
-DataType List::ViewTail()
-{
-	if (isEmpty())
-		throw std::logic_error("list is empty");
-	else
-		return data;
-}
 
 void List::Delete(const DataType& d)
 {
@@ -128,6 +129,11 @@ listIterator List::end()
 
 List::~List()
 {
+	Node* tmp = head;
+	while (tmp != nullptr)
+	{
+		Node* next = tmp->next;
+		delete tmp;
+        tmp = next;
+	}
 }
-
-
